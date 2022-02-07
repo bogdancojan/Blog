@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Thanks for adding a new comment !</h1>
+    <h4>Sent: <%= @comment.created_at.strftime("%m/%d/%Y - %I:%M%p") %></h4>
+    <p>Name: <%= @comment.commenter %></p>
+  </body>
+</html>

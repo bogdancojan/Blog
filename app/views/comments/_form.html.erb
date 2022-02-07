@@ -1,0 +1,20 @@
+<%= form_for ([ @article, @article.comments.build ]) do |form| %>
+  <p>
+    <%= form.label :commenter %><br>
+    <%= form.text_field :commenter, required: true %>
+  </p>
+  
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body, required: true, minlength: 10 %>
+  </p>
+
+  <p>
+    <%= form.label :status %><br>
+    <%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

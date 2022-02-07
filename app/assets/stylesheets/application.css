@@ -1,0 +1,50 @@
+.container {
+  font-family: arial;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: auto;
+}
+
+th,
+td {
+  text-align: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th {
+  background-color: #04aa6d;
+  color: white;
+}
+
+tr:hover {
+  background-color: #04aa6da9;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.card {
+  width: fit-content;
+  font-family: arial;
+  font-size: 15px;
+  text-align: center;
+}
+
+.article {
+  display: flex;
+  flex-direction: row;
+}
