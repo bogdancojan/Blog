@@ -5,6 +5,6 @@ class CommentMailer < ApplicationMailer
 
   def new_comment_email
     @comment = params[:comment]
-    mail(to: 'Bogdan.Cojan@theaccessgroup.com', subject: "There's a new comment from #{@comment.commenter}")
+    mail(to: 'bogdan@test.com', subject: "There's a new comment from #{@comment.commenter}")
   end
 end
