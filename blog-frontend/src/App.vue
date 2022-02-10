@@ -1,17 +1,33 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Articles :articles="articles" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Articles from "./components/Articles";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Articles,
+  },
+  data() {
+    return {
+      articles: [],
+    };
+  },
+  methods: {
+    async fetchArticles() {
+      const res = await fetch(
+        "http://localhost:3000/apis/articles/v1/articles_json"
+      );
+      const data = await res.json();
+      return data;
+    },
+  },
+  async created() {
+    this.articles = await this.fetchArticles();
+  },
+};
 </script>
 
 <style>
