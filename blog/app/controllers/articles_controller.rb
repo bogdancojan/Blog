@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
+  before_action :check_admin_or_owner, only: [:edit, :update, :destroy]
+  
   def index
     @articles = Article.all
   end
@@ -53,5 +55,12 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :body, :status)
+  end
+
+  def check_admin_or_owner
+    article = Article.find(params[:id])
+    unless current_user.admin or article.user_id == current_user.id
+      redirect_to root_path, alert: "You don't have permission on this article !" 
+    end
   end
 end

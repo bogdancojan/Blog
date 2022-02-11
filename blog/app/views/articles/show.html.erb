@@ -11,11 +11,13 @@
 
      <div class="btn-group">
        <div style="padding:4px"><%= link_to "Back", root_path %></div>
-       <div style="padding:4px"><%= link_to "Edit", edit_article_path(@article) %></div>
-       <div style="padding:4px"><%= link_to "Destroy", article_path(@article), data: {
-                       turbo_method: :delete,
-                       turbo_confirm: "Are you sure?"
-                       } %></div>
+        <% if current_user.admin or @article.user_id == current_user.id %>
+          <div style="padding:4px"><%= link_to "Edit", edit_article_path(@article) %></div>
+          <div style="padding:4px"><%= link_to "Destroy", article_path(@article), data: {
+                          turbo_method: :delete,
+                          turbo_confirm: "Are you sure?"
+                          } %></div>
+        <% end %>
      </div>
                    
      <h2>Comments</h2>
