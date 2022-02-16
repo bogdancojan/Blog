@@ -2,6 +2,7 @@
 
 class ArticlesController < ApplicationController
   before_action :check_admin_or_owner, only: [:edit, :update, :destroy]
+  skip_before_action :authenticate_user!, if: :skip_authenticate_user
   
   def index
     @articles = Article.all
@@ -62,5 +63,9 @@ class ArticlesController < ApplicationController
     unless current_user.admin or article.user_id == current_user.id
       redirect_to root_path, alert: "You don't have permission on this article !" 
     end
+  end
+
+  def skip_authenticate_user
+    action_name == 'show' && request.format.json?
   end
 end
