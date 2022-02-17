@@ -1,32 +1,39 @@
 <template>
-  <Articles :articles="articles" />
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <img
+          src="./assets/logo-nav.svg"
+          alt=""
+          width="30"
+          height="24"
+          class="d-inline-block align-text-top"
+        />
+        Blogster
+      </a>
+      <div class="justify-content-end">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/">Articles</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/article/new"
+              >New Article</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <router-view />
 </template>
 
 <script>
-import Articles from "./components/Articles";
-
 export default {
   name: "App",
-  components: {
-    Articles,
-  },
-  data() {
-    return {
-      articles: [],
-    };
-  },
-  methods: {
-    async fetchArticles() {
-      const res = await fetch(
-        "http://localhost:3000/apis/articles/v1/articles_json"
-      );
-      const data = await res.json();
-      return data;
-    },
-  },
-  async created() {
-    this.articles = await this.fetchArticles();
-  },
 };
 </script>
 
@@ -37,6 +44,22 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.navbar a {
+  font-weight: bold;
+  color: #0091ad;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.navbar a.router-link-exact-active {
+  color: white;
+  background: #5c4d7d;
 }
 </style>

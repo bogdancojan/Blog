@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Article from "./Article";
+import Article from "../views/Article";
 
 export default {
   name: "Articles",
