@@ -16,10 +16,26 @@
     <form>
       <h4>New Comment</h4>
       <div class="mb-3">
-        <input type="text" class="form-control" placeholder="Commenter" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Commenter"
+          v-model="commenter"
+        />
+        <span style="color: #b7094c" v-if="v$.commenter.$error">
+          {{ v$.commenter.$errors[0].$message }}
+        </span>
       </div>
       <div class="mb-3">
-        <textarea class="form-control" rows="3" placeholder="Body"></textarea>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder="Body"
+          v-model="body"
+        ></textarea>
+        <span style="color: #b7094c" v-if="v$.body.$error">
+          {{ v$.body.$errors[0].$message }}
+        </span>
       </div>
       <div class="mb-3">
         <select class="form-select">
@@ -28,7 +44,9 @@
           <option value="3">archived</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Create</button>
+      <button @click="submitForm" type="button" class="btn btn-primary">
+        Create
+      </button>
     </form>
   </div>
   <div
@@ -52,10 +70,40 @@
 </template>
 
 <script>
+import useVuelidate from "@vuelidate/core";
+import { required, minLength } from "@vuelidate/validators";
+
 export default {
   name: "Content",
   props: {
     article: Object,
+  },
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
+  data() {
+    return {
+      commenter: "",
+      body: "",
+    };
+  },
+  validations() {
+    return {
+      commenter: { required },
+      body: { required, minLength: minLength(10) },
+    };
+  },
+  methods: {
+    async submitForm() {
+      const isFormCorrect = await this.v$.$validate();
+      if (!isFormCorrect) {
+        return;
+      } else {
+        alert("Success !");
+      }
+    },
   },
 };
 </script>
