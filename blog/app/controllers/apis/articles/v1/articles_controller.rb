@@ -1,5 +1,7 @@
 class Apis::Articles::V1::ArticlesController < ApplicationController
-  def articles_json
+  skip_before_action :authenticate_user!
+
+  def index
     @articles = []
     Article.all.each do |article|
       @articles << get_formatted_article(article)
@@ -7,7 +9,24 @@ class Apis::Articles::V1::ArticlesController < ApplicationController
     render json: @articles
   end
 
+  def new
+    @article = Article.new
+  end
+
+  def create
+    @article = Article.new(article_params)
+
+    if @article.save
+      head 200 
+    end
+  end
+
   private
+
+  def article_params
+    params.require(:article).permit(:title, :body, :status, :user_id)
+  end
+
   def get_formatted_article(article)
     formatted_article = {
       id: article.id,

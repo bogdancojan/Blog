@@ -18,7 +18,7 @@ export default {
   methods: {
     async fetchArticles() {
       const res = await fetch(
-        "http://localhost:3000/apis/articles/v1/articles_json"
+        "http://localhost:3000/apis/articles/v1/articles"
       );
       const data = await res.json();
       return data;

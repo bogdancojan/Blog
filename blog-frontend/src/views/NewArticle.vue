@@ -15,11 +15,14 @@
       </span>
     </div>
     <div class="mb-3">
-      <select class="form-select">
-        <option value="1">public</option>
-        <option value="2">private</option>
-        <option value="3">archived</option>
+      <select class="form-select" v-model="status">
+        <option value="public">public</option>
+        <option value="private">private</option>
+        <option value="archived">archived</option>
       </select>
+      <span style="color: #b7094c" v-if="v$.status.$error">
+        {{ v$.status.$errors[0].$message }}
+      </span>
     </div>
     <button @click="submitForm" type="button" class="btn btn-primary">
       Create
@@ -30,6 +33,7 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
+import axios from "axios";
 
 export default {
   name: "NewArticle",
@@ -42,12 +46,14 @@ export default {
     return {
       title: "",
       body: "",
+      status: "",
     };
   },
   validations() {
     return {
       title: { required },
       body: { required, minLength: minLength(10) },
+      status: { required },
     };
   },
   methods: {
@@ -56,7 +62,22 @@ export default {
       if (!isFormCorrect) {
         return;
       } else {
-        alert("Success !");
+        const res = await axios.post(
+          "http://localhost:3000/apis/articles/v1/articles",
+          {
+            title: this.title,
+            body: this.body,
+            status: this.status,
+            // when I implement the login I mush change the user_id that is sent
+            user_id: 1,
+            headers: {
+              origin: "http://localhost:3000",
+            },
+          }
+        );
+        if (res.status == 200) {
+          this.$router.replace({ name: "Home" });
+        }
       }
     },
   },
