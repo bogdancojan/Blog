@@ -21,6 +21,12 @@ class Apis::Articles::V1::ArticlesController < ApplicationController
     end
   end
 
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    head 200
+  end
+
   private
 
   def article_params

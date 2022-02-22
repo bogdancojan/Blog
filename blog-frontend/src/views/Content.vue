@@ -12,6 +12,12 @@
           {{ article.body }}
         </p>
       </div>
+      <div class="d-grid gap-2 d-md-flex justify-content-center">
+        <button class="btn btn-primary" type="button">Edit</button>
+        <button @click="deleteArticle" class="btn btn-b-danger" type="button">
+          Delete
+        </button>
+      </div>
     </div>
     <form>
       <h4>New Comment</h4>
@@ -72,6 +78,7 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
+import axios from "axios";
 
 export default {
   name: "Content",
@@ -104,6 +111,15 @@ export default {
         alert("Success !");
       }
     },
+
+    async deleteArticle() {
+      const res = await axios.delete(
+        "http://localhost:3000/apis/articles/v1/articles/" + this.article.id
+      );
+      if (res.status == 200) {
+        this.$router.replace({ name: "Home" });
+      }
+    },
   },
 };
 </script>
@@ -123,5 +139,15 @@ export default {
 
 .btn-primary:hover {
   background: #5c4d7d;
+}
+
+.btn-b-danger {
+  background: #0091ad;
+  border: none;
+  color: white;
+}
+
+.btn-b-danger:hover {
+  background: #b7094c;
 }
 </style>
