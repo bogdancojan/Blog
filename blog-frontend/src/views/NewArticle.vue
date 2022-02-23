@@ -15,6 +15,7 @@
       </span>
     </div>
     <div class="mb-3">
+      <label class="form-label">Status</label>
       <select class="form-select" v-model="status">
         <option value="public">public</option>
         <option value="private">private</option>

@@ -44,11 +44,15 @@
         </span>
       </div>
       <div class="mb-3">
-        <select class="form-select">
-          <option value="1">public</option>
-          <option value="2">private</option>
-          <option value="3">archived</option>
+        <label class="form-label">Status</label>
+        <select class="form-select" v-model="status">
+          <option value="public">public</option>
+          <option value="private">private</option>
+          <option value="archived">archived</option>
         </select>
+        <span style="color: #b7094c" v-if="v$.status.$error">
+          {{ v$.status.$errors[0].$message }}
+        </span>
       </div>
       <button @click="submitForm" type="button" class="btn btn-primary">
         Create
@@ -61,21 +65,13 @@
   >
     <h2><b>Comments</b></h2>
     <div :key="comment.id" v-for="comment in article.comments">
-      <div class="card" style="width: 60vw; margin-bottom: 5px">
-        <div class="card-body">
-          <blockquote class="blockquote mb-0">
-            <p>{{ comment.body }}</p>
-            <footer class="blockquote-footer">
-              {{ comment.commenter }}
-            </footer>
-          </blockquote>
-        </div>
-      </div>
+      <Comment :comment="comment" />
     </div>
   </div>
 </template>
 
 <script>
+import Comment from "./Comment";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import axios from "axios";
@@ -84,6 +80,9 @@ export default {
   name: "Content",
   props: {
     article: Object,
+  },
+  components: {
+    Comment,
   },
   setup() {
     return {
@@ -94,12 +93,14 @@ export default {
     return {
       commenter: "",
       body: "",
+      status: "",
     };
   },
   validations() {
     return {
       commenter: { required },
       body: { required, minLength: minLength(10) },
+      status: { required },
     };
   },
   methods: {
@@ -108,7 +109,22 @@ export default {
       if (!isFormCorrect) {
         return;
       } else {
-        alert("Success !");
+        const res = await axios.post(
+          "http://localhost:3000/apis/comments/v1/articles/" +
+            this.article.id +
+            "/comments",
+          {
+            commenter: this.commenter,
+            body: this.body,
+            status: this.status,
+            headers: {
+              origin: "http://localhost:3000",
+            },
+          }
+        );
+        if (res.status == 200) {
+          this.$router.go(0);
+        }
       }
     },
 

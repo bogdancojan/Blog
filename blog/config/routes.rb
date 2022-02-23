@@ -20,5 +20,12 @@ Rails.application.routes.draw do
         resources :articles
       end
     end
+    namespace :comments do
+      namespace :v1 do
+        resources :articles do
+          resources :comments
+        end
+      end
+    end
   end
 end
