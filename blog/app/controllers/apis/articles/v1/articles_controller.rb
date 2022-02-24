@@ -41,8 +41,10 @@ class Apis::Articles::V1::ArticlesController < ApplicationController
       id: article.id,
       title: article.title,
       body: article.body,
+      status: article.status,
       created_at: article.created_at,
-      updated_at: article.updated_at
+      updated_at: article.updated_at,
+      user_id: article.user_id
     }
   end
 end

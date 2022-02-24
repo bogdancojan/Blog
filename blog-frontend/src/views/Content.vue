@@ -65,7 +65,9 @@
   >
     <h2><b>Comments</b></h2>
     <div :key="comment.id" v-for="comment in article.comments">
-      <Comment :comment="comment" />
+      <div v-if="comment.status == 'public'">
+        <Comment :comment="comment" />
+      </div>
     </div>
   </div>
 </template>

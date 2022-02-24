@@ -1,6 +1,8 @@
 <template>
   <div :key="article.id" v-for="article in articles">
-    <Article :article="article" />
+    <div v-if="article.status == 'public'">
+      <Article :article="article" />
+    </div>
   </div>
 </template>
 
