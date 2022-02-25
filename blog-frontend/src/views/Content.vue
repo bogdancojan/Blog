@@ -13,7 +13,11 @@
         </p>
       </div>
       <div class="d-grid gap-2 d-md-flex justify-content-center">
-        <button class="btn btn-primary" type="button">Edit</button>
+        <router-link
+          :to="{ name: 'EditArticle', params: { id_edit: article.id } }"
+        >
+          <button class="btn btn-primary" type="button">Edit</button>
+        </router-link>
         <button @click="deleteArticle" class="btn btn-b-danger" type="button">
           Delete
         </button>

@@ -3,6 +3,7 @@ import Home from "../components/Home.vue";
 import NewArticle from "../views/NewArticle.vue";
 import ArticleBody from "../components/ArticleBody.vue";
 import NotFound from "../views/NotFound.vue";
+import EditArticle from "../views/EditArticle.vue";
 
 const routes = [
   {
@@ -19,6 +20,12 @@ const routes = [
     path: "/article/:id",
     name: "ArticleBody",
     component: ArticleBody,
+    props: true,
+  },
+  {
+    path: "/article/:id/edit",
+    name: "EditArticle",
+    component: EditArticle,
     props: true,
   },
   {

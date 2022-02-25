@@ -21,6 +21,18 @@ class Apis::Articles::V1::ArticlesController < ApplicationController
     end
   end
 
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      head 200
+    end
+  end
+
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
