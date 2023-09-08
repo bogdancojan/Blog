@@ -52,6 +52,11 @@ class ArticlesController < ApplicationController
     redirect_to root_path, status: :see_other
   end
 
+  def create_like
+    @article = Article.find(params[:article_id])
+    @article.create_like(current_user)
+  end
+
   private
 
   def article_params

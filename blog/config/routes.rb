@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   root 'articles#index'
   
   resources :articles do
-    resources :comments
+    post 'create_like', on: :member
+    resources :comments do
+      post 'create_like', on: :member
+    end
   end
 
   namespace :apis do

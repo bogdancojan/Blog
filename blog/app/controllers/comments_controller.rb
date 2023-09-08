@@ -16,6 +16,11 @@ class CommentsController < ApplicationController
     redirect_to article_path(@article), status: 303
   end
 
+  def create_like
+    @comment = Comment.find(params[:comment_id])
+    @comment.create_like(current_user)
+  end
+
   private
 
   def comment_params

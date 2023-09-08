@@ -1,7 +1,12 @@
 <% unless comment.archived? %>
   <div class="card">
-    <div class="card-header">
+    <div class="card-header" style="display: flex;justify-content: space-between;align-items: center;">
       Comment
+      <%= form_with url: create_like_article_comment_path(@article), method: :post do |form| %>
+        <%= form.hidden_field :comment_id, value: comment.id %>
+  
+        <%= form.button "Like", class: "btn btn-info", type: :submit %>
+      <% end %>
     </div>
     <div class="card-body">
       <blockquote class="blockquote mb-0">
@@ -9,13 +14,14 @@
         <footer class="blockquote-footer"><%= comment.commenter %> - <%= comment.created_at.strftime("%m/%d/%Y - %I:%M%p") %></cite></footer>
       </blockquote>
     </div>
-    <p>
-    <% if current_user.admin or @article.user_id == current_user.id %>
-      <%= link_to "Destroy Comment", [comment.article, comment], data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  } %>
-    <% end %>
-    </p>
+    <div style="display: flex;justify-content: space-evenly;align-items: center;">
+      <% if current_user.admin or @article.user_id == current_user.id %>
+        <%= link_to "Destroy Comment", [comment.article, comment], data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    } %>
+      <% end %>
+      <p style="padding-top: 16px;color: green;"><b>Likes:</b> <%= comment.count_likes %></p>
+    </div>
   </div>
 <% end %>

@@ -11,12 +11,14 @@
     <tr>
       <th>Articles</th>
       <th>Comments</th>
+      <th style="display: flex; justify-content: center;">Created by</th>
     </tr>
     <% @articles.each do |article| %>
       <% unless article.archived? %>
         <tr>
           <td><%= link_to article.title, article %></td>
           <td><%= article.comments.public_count %></td>
+          <td><%= article.email %></td>
         </tr>
       <% end %>
     <% end %>
