@@ -19,6 +19,8 @@ class CommentsController < ApplicationController
   def create_like
     @comment = Comment.find(params[:comment_id])
     @comment.create_like(current_user)
+
+    render turbo_stream: turbo_stream.replace("update_likes_comment", partial: "/comments/likes/like_count", locals: { comment: @comment })
   end
 
   private

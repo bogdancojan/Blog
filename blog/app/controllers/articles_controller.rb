@@ -55,6 +55,8 @@ class ArticlesController < ApplicationController
   def create_like
     @article = Article.find(params[:article_id])
     @article.create_like(current_user)
+
+    render turbo_stream: turbo_stream.replace("update_likes", partial: "/articles/likes/like_count", locals: { article: @article })
   end
 
   private

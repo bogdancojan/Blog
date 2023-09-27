@@ -9,7 +9,7 @@
         <%= @article.title %> 
         <%= form_with url: create_like_article_path, method: :post do |form| %>
           <%= form.hidden_field :article_id, value: @article.id %>
-  
+    
           <%= form.button "Like", class: "btn btn-info", type: :submit %>
         <% end %>
       </h1>
@@ -27,7 +27,9 @@
                               } %></div>
             <% end %>
         </div>
-        <p style="padding-top: 18px;color: green;"><b>Likes:</b> <%= @article.count_likes %></p>
+        <%= turbo_frame_tag "update_likes" do %>
+          <%= render partial: "/articles/likes/like_count", locals: { article: @article } %>
+        <% end %>
       </div>
 
       <h2>Comments</h2>

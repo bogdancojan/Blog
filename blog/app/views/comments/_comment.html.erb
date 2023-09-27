@@ -21,7 +21,9 @@
                       turbo_confirm: "Are you sure?"
                     } %>
       <% end %>
-      <p style="padding-top: 16px;color: green;"><b>Likes:</b> <%= comment.count_likes %></p>
+      <%= turbo_frame_tag "update_likes_comment" do %>
+        <%= render partial: "/comments/likes/like_count", locals: { comment: comment } %>
+      <% end %>
     </div>
   </div>
 <% end %>
